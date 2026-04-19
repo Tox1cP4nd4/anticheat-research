@@ -15,11 +15,11 @@ a solid understanding of the attack surface. Now I'm flipping sides.
 
 ## Structure
 
-\`\`\`
+```
 anticheat-research/
 ├── notes/    ← concepts I'm studying, written in my own words
 └── src/      ← implementations as I learn each technique
-\`\`\`
+```
 
 ---
 
