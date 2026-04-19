@@ -71,6 +71,33 @@ at kernel level (WinDbg kernel mode). Strong indicator of an analysis environmen
 
 ---
 
+## Memory Protection
+
+**`ProtectedMemory`** is a custom class that allocates a memory region and marks it
+as `PAGE_READONLY` after writing the data. Any attempt to modify it triggers an
+`ACCESS_VIOLATION`, which is caught by the `g_ExceptionHandler` (VEH).
+
+Used to protect the anti-cheat's own configuration (`Settings` struct) from being
+tampered with by cheats — if a cheat tries to flip a flag like `bUseAntiDebugging = false`,
+it gets caught instead.
+
+```cpp
+// instead of this (unprotected):
+Settings settings;
+settings.bUseAntiDebugging = false; // cheat disables protection silently
+
+// the AC does this:
+ProtectedMemory ProtectedSettingsMemory(sizeof(Settings));
+// any write attempt → ACCESS_VIOLATION → detected
+```
+
+**How it fits together:**
+- `/ALIGN:0x10000` — each PE section gets its own 64KB memory region
+- `ProtectedMemory` — marks critical data as read-only
+- `g_ExceptionHandler` — catches any write attempt on protected regions
+
+---
+
 ## Reference Repos
 
 - https://github.com/AlSch092/UltimateAntiCheat
