@@ -58,7 +58,7 @@ Source:
 
 IAT Address (0xa2000) is RVA address. To find the IAT in the file:
 
-Offset = RVA - Section VA + PointerToRawData = 0xa0800
+Offset = RVA (0xa2000) - Section VA (0xa2000) + PointerToRawData (0xa0800) = 0xa0800
 
 Wee can see these values opening the same binary on DetectItEasy (DIE):
 
