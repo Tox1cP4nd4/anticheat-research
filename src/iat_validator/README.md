@@ -3,6 +3,7 @@ Studdy to understand better how IAT works and how to implement Anti-Cheat IAT De
 
 # 1- Understand PE File Structure
 
+```
 Offset 0x00   ┌──────────────────────────────────────────────────────┐
               │  IMAGE_DOS_HEADER  (64 bytes)                        │
               │  - e_magic: "MZ"                                     │
@@ -43,6 +44,7 @@ Offset ~0x40  │  DOS Stub Program                                    │
               │  ├─ .reloc    → Relocation information                │
               │  └─ ...                                              │
               └──────────────────────────────────────────────────────┘
+```
 
 Source: 
 - [https://learn.microsoft.com/en-us/windows/win32/debug/pe-format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
