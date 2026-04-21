@@ -91,7 +91,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 # 5- Implementing IAT Code
 
-1. GetModuleHandle
+## 1. GetModuleHandle
 
 - What does it return?  
 - What happens when you pass NULL as a parameter?  
