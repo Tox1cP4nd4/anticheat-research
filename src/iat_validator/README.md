@@ -89,7 +89,7 @@ For IaT detection in anti-cheat, since we are at runtime, we need to:
 
 Since Windows overwrites the Iat with the addresses, you lose the names there. To obtain them, we need to look at the ILT (Import Lookup Table).
 
-# 5- Implementing IAT Code
+# 5- Windows API - (Study before implementation)
 
 ## 1. GetModuleHandle
 
