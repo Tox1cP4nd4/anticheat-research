@@ -62,7 +62,9 @@ Offset = RVA - Section VA + PointerToRawData = 0xa0800
 
 Wee can see these values opening the same binary on DetectItEasy (DIE):
 
-<img width="1531" height="155" alt="image" src="https://github.com/user-attachments/assets/90787862-bc96-4099-909b-9bd9531e15d4" />
+<img width="654" height="158" alt="Screenshot_4" src="https://github.com/user-attachments/assets/860ba445-e67d-49b8-b8aa-7271617f519e" />
+
+<br>
 
 <img width="808" height="541" alt="Screenshot_2" src="https://github.com/user-attachments/assets/8cc89dd6-a478-4236-b7af-67fcfff219cb" />
 
