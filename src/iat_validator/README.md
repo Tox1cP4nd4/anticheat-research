@@ -89,5 +89,33 @@ For IaT detection in anti-cheat, since we are at runtime, we need to:
 
 Since Windows overwrites the Iat with the addresses, you lose the names there. To obtain them, we need to look at the ILT (Import Lookup Table).
 
+# 5- Implementing IAT Code
+
+1. GetModuleHandle
+What does it return?
+What happens when you pass NULL as a parameter?
+Which header do you need to include?
+
+2. GetModuleInformation
+What is MODULEINFO and what fields does it have?
+Why does it need a process handle as a parameter?
+Which header do you need to include?
+
+3. IMAGE_IMPORT_DESCRIPTOR
+How many fields does this struct have?
+Which field points to the DLL name?
+Which field points to IAT?
+Which field points to ILT?
+How do you know you've reached the end of the descriptor array?
+
+4. $\color{red}{\text{IMAGE\_THUNK\_DATA}}$
+What does each entry in this struct represent?
+What is the difference between its value before and after Windows loads the executable?
+
+Reference: 
+- https://learn.microsoft.com/pt-br/windows/win32/api/libloaderapi/ (Microsoft Windows - API Documentation)
+
+
+
 
 
