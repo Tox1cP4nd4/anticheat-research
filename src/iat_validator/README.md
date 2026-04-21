@@ -129,7 +129,7 @@ How do you know you've reached the end of the descriptor array?
 What does each entry in this struct represent?  
 What is the difference between its value before and after Windows loads the executable?
 
-<span style="color:#ff5555; font-weight:bold; font-size:1.25em;">IMAGE_THUNK_DATA</span>
+<span style="color:#a83232; font-weight:bold; font-size:1.25em;">IMAGE_THUNK_DATA</span>
 
 ---
 
