@@ -98,7 +98,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - What happens when you pass NULL as a parameter?  The handle to the calling program is returned
 - Which header do you need to include? #include <windows.h>
 
--> [WinAPI-Documentation]([WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea))
+-> [WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea)
 
 ---
 
@@ -108,7 +108,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - Why does it need a process handle as a parameter?  (hProcess) To determine which program the function should obtain information from.
 - Which header do you need to include? wtf you mean by header? 
 
-[WinAPI-Documentation]([WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo))
+[WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo)
 
 
 ---
