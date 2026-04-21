@@ -1,1 +1,69 @@
+# First Steps
+Studdy to understand better how IAT works and how to implement Anti-Cheat IAT Detection.
+
+# 1- Understand PE File Structure
+
+Offset 0x00   ┌──────────────────────────────────────────────────────┐
+              │  IMAGE_DOS_HEADER  (64 bytes)                        │
+              │  - e_magic: "MZ"                                     │
+              │  - e_lfanew  ←  Offset to PE Header                 │
+              ├──────────────────────────────────────────────────────┤
+Offset ~0x40  │  DOS Stub Program                                    │
+              │  "This program cannot be run in DOS mode."           │
+              ├──────────────────────────────────────────────────────┤
+   e_lfanew   │  PE Header                                           │
+              │  ├─ Signature: "PE\0\0"                             │
+              │  ├─ COFF File Header (20 bytes)                      │
+              │  └─ Optional Header (224 or 240 bytes)               │
+              │       │                                              │
+              │       └─ Data Directories  (16 entries × 8 bytes)    │
+              │             • Export Table                           │
+              │             • Import Table                           │
+              │             • Resource Table                         │
+              │             • Exception Table                        │
+              │             • Base Relocation Table (.reloc)         │
+              │             • Debug Directory                        │
+              │             • Import Address Table (IAT)   ← Index 12│
+              │             • ... (other directories)                │
+              ├──────────────────────────────────────────────────────┤
+              │  Section Headers  (one entry per section)            │
+              │  - .text     (code)                                  │
+              │  - .rdata    (read-only data, imports, IAT)          │
+              │  - .data     (initialized data)                      │
+              │  - .rsrc     (resources)                             │
+              │  - .reloc    (base relocations)                      │
+              │  - .idata    (sometimes present)                     │
+              │  ...                                                 │
+              ├──────────────────────────────────────────────────────┤
+              │  Image Sections  (the actual content)                │
+              │  ├─ .text     → Machine code                          │
+              │  ├─ .rdata    → Import Table + IAT + constants        │
+              │  ├─ .data     → Global variables                      │
+              │  ├─ .rsrc     → Icons, dialogs, version info          │
+              │  ├─ .reloc    → Relocation information                │
+              │  └─ ...                                              │
+              └──────────────────────────────────────────────────────┘
+
+Source: 
+- [https://learn.microsoft.com/en-us/windows/win32/debug/pe-format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
+- [https://www.sunshine2k.de/reversing/tuts/tut_pe.htm](https://www.sunshine2k.de/reversing/tuts/tut_pe.htm)
+
+# 2- Finding Import Address Table in PE executable file
+
+<img width="1323" height="640" alt="Screenshot_1" src="https://github.com/user-attachments/assets/fa6c8285-7b21-499f-ac85-1649670a8ab4" />
+
+# 3 - RVA vs File Offset
+
+IAT Address (0xa2000) is RVA address. To find the IAT in the file:
+
+Offset = RVA - Section VA + PointerToRawData = 0xa0800
+
+Wee can see these values opening the same binary on DetectItEasy (DIE):
+
+<img width="1531" height="155" alt="image" src="https://github.com/user-attachments/assets/90787862-bc96-4099-909b-9bd9531e15d4" />
+
+
+
+
+
 
