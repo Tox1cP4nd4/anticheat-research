@@ -106,7 +106,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 - What is MODULEINFO and what fields does it have?  A windows API function that "Retrieves information about the specified module". [FIELDS](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo): lpBaseOfDll, SizeOfImage, EntryPoint
 - Why does it need a process handle as a parameter?  (hProcess) To determine which program the function should obtain information from.
-- Which header do you need to include? The include we will need when we start coding: #import <psapi.h>
+- Which header do you need to include? The include we will need when we start coding: #include <psapi.h>
 
 [WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo)
 
@@ -115,12 +115,13 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ## 3. IMAGE_IMPORT_DESCRIPTOR
 
-- How many fields does this struct have?  
-- Which field points to the DLL name?  
-- Which field points to IAT?  
-- Which field points to ILT?  
-- How do you know you've reached the end of the descriptor array?
+- How many fields does this struct have? 5 fields: OriginalFirstThunk, TimeDateStamp, ForwarderChain, Name, FirstThunk
+- Which field points to the DLL name?  Name
+- Which field points to IAT?  FirstThunk ( This is where Windows "writes" the actual address of the function into memory after the program loads. )
+- Which field points to ILT?  OriginalFirstThunk
+- How do you know you've reached the end of the descriptor array? When see 0x14 bytes long zeros, it is the end of our array of IMAGE_IMPORT_DESCRIPTORs.
 
+[Reference](https://www.sunshine2k.de/reversing/tuts/tut_rvait.htm)
 
 ---
 
