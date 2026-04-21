@@ -108,7 +108,7 @@ Which field points to IAT?
 Which field points to ILT?
 How do you know you've reached the end of the descriptor array?
 
-4. $\color{red}{\text{IMAGE\_THUNK\_DATA}}$
+4. **IMAGE_THUNK_DATA**
 What does each entry in this struct represent?
 What is the difference between its value before and after Windows loads the executable?
 
