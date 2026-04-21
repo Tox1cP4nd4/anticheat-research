@@ -98,17 +98,17 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - What happens when you pass NULL as a parameter?  The handle to the calling program is returned
 - Which header do you need to include? #include <windows.h>
 
--> [https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea](WinAPI-Documentation)
+-> [WinAPI-Documentation]([WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea))
 
 ---
 
 ## 2. GetModuleInformation
 
-- What is MODULEINFO and what fields does it have?  A windows API function that "Retrieves information about the specified module". [https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo](FIELDS): lpBaseOfDll, SizeOfImage, EntryPoint
+- What is MODULEINFO and what fields does it have?  A windows API function that "Retrieves information about the specified module". [FIELDS](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo): lpBaseOfDll, SizeOfImage, EntryPoint
 - Why does it need a process handle as a parameter?  (hProcess) To determine which program the function should obtain information from.
 - Which header do you need to include? wtf you mean by header? 
 
-[https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo](WinAPI-Documentation)
+[WinAPI-Documentation]([WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo))
 
 
 ---
