@@ -93,43 +93,37 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 1. GetModuleHandle
 
-What does it return?  
-What happens when you pass NULL as a parameter?  
-Which header do you need to include?
+- What does it return?  
+- What happens when you pass NULL as a parameter?  
+- Which header do you need to include?
 
-<span style="color:#ff4444; font-weight:bold; font-size:1.2em;">GetModuleHandle</span>
 
 ---
 
 2. GetModuleInformation
 
-What is MODULEINFO and what fields does it have?  
-Why does it need a process handle as a parameter?  
-Which header do you need to include?
+- What is MODULEINFO and what fields does it have?  
+- Why does it need a process handle as a parameter?  
+- Which header do you need to include?
 
-<span style="color:#ff4444; font-weight:bold; font-size:1.2em;">GetModuleInformation</span>  
-<span style="color:#ff4444; font-weight:bold; font-size:1.2em;">MODULEINFO</span>
 
 ---
 
 3. IMAGE_IMPORT_DESCRIPTOR
 
-How many fields does this struct have?  
-Which field points to the DLL name?  
-Which field points to IAT?  
-Which field points to ILT?  
-How do you know you've reached the end of the descriptor array?
+- How many fields does this struct have?  
+- Which field points to the DLL name?  
+- Which field points to IAT?  
+- Which field points to ILT?  
+- How do you know you've reached the end of the descriptor array?
 
-<span style="color:#ff4444; font-weight:bold; font-size:1.2em;">IMAGE_IMPORT_DESCRIPTOR</span>
 
 ---
 
 4. IMAGE_THUNK_DATA
 
-What does each entry in this struct represent?  
-What is the difference between its value before and after Windows loads the executable?
-
-<span style="color:#a83232; font-weight:bold; font-size:1.25em;">IMAGE_THUNK_DATA</span>
+- What does each entry in this struct represent?  
+- What is the difference between its value before and after Windows loads the executable?
 
 ---
 
