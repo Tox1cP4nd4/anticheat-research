@@ -100,7 +100,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-2. GetModuleInformation
+## 2. GetModuleInformation
 
 - What is MODULEINFO and what fields does it have?  
 - Why does it need a process handle as a parameter?  
@@ -109,7 +109,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-3. IMAGE_IMPORT_DESCRIPTOR
+## 3. IMAGE_IMPORT_DESCRIPTOR
 
 - How many fields does this struct have?  
 - Which field points to the DLL name?  
@@ -120,7 +120,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-4. IMAGE_THUNK_DATA
+## 4. IMAGE_THUNK_DATA
 
 - What does each entry in this struct represent?  
 - What is the difference between its value before and after Windows loads the executable?
