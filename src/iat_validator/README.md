@@ -83,6 +83,8 @@ Then we can see the ASCII text (Function Name)
 
 # 4- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
 
+"After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs". Following this, we can find the imported dll names and functions. 
+
 <br>
 
 - Import Table (RVA) -> found at 0xbe05c - Using DiE:
@@ -140,8 +142,6 @@ For IaT detection in anti-cheat, since we are at runtime, we need to:
 Since Windows overwrites the Iat with the addresses, you lose the names there. To obtain them, we need to look at the ILT (Import Lookup Table).
 
 # 7- Windows API - (Study before implementation)
-
-"After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs". Following this, we can find the imported dll names and functions. 
 
 ## GetModuleHandle
 
