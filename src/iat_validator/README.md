@@ -125,7 +125,7 @@ Then we can see the ASCII text (Function Name)
 
 # 5- File on HD X Memory
 
-If the file is on HD, IaT points tothe function names. But if it's loaded on memory, it points to the libraries addresses (names are substituted by addresses - linker)
+If the file is on HD, IaT points to the function names. But if it's loaded on memory, it points to the libraries addresses (names are substituted by addresses - linker)
 
 If loaded in memory: To obtain the names, we need to look at the ILT (Import Lookup Table).
 
