@@ -132,7 +132,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-# 6- Manually finding IMAGE_IMPORT_DESCRIPTOR's
+# 6- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
 
 <br>
 
