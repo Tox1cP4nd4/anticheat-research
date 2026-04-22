@@ -76,6 +76,8 @@ Wee can see these values opening the same binary on DetectItEasy (DIE):
 
 <img width="808" height="541" alt="Screenshot_2" src="https://github.com/user-attachments/assets/8cc89dd6-a478-4236-b7af-67fcfff219cb" />
 
+<br>
+
 The structure we found seems to be called IMAGE_IMPORT_BY_NAME. The first 2 bytes are Hint (ignore them).
 Then we can see the ASCII text (Function Name)
 
