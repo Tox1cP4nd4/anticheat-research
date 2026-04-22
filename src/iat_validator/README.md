@@ -81,13 +81,53 @@ Wee can see these values opening the same binary on DetectItEasy (DIE):
 The structure we found seems to be called IMAGE_IMPORT_BY_NAME. The first 2 bytes are Hint (ignore them).
 Then we can see the ASCII text (Function Name)
 
-# 4- File on HD X Memory
+# 4- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
+
+<br>
+
+- Import Table (RVA) -> found at 0xbe05c - Using DiE:
+
+<img width="892" height="468" alt="Screenshot_6" src="https://github.com/user-attachments/assets/1abcca6f-b4d1-485e-bd65-c1e0cef9a5ed" />
+
+<br>
+
+- (RVA) Calculation: 0xbe05c - 0xa2000 + 0xa0800 = 0xBC85C
+
+- 0xBC85C = Import Directory (So-called IMAGE_IMPORT_DESCRIPTORs)
+
+<img width="828" height="319" alt="Screenshot_7" src="https://github.com/user-attachments/assets/1807cc78-6e17-4f0c-9c36-bac7aa90e422" />
+
+<br>
+<br>
+
+- IMAGE_IMPORT_DESCRIPTOR looks like:
+<img width="530" height="130" alt="Screenshot_8" src="https://github.com/user-attachments/assets/7b614cef-a3fc-4c48-b1a7-d7ef6fef2a26" />
+
+- DWORD = 4 Bytes
+
+- If we jump, after 12 bytes we find name: 
+
+<img width="828" height="319" alt="Screenshot_9" src="https://github.com/user-attachments/assets/66605b33-23c6-4796-9338-bca2e03576e8" />
+
+<br>
+
+- found -> 0xbe4c6 (should be name )
+  
+- (RVA) Calculation: 0xbe4c6 - 0xa2000 + 0xa0800 = 0xBCCC6
+
+- 0xBCCC6 -> If our calculations are correct, we should find a DLL name at this address
+
+<img width="693" height="184" alt="Screenshot_10" src="https://github.com/user-attachments/assets/c1a8bc84-8de4-4417-9d14-2df43d9dfc35" />
+
+<br>
+
+# 5- File on HD X Memory
 
 If the file is on HD, IaT points tothe function names. But if it's loaded on memory, it points to the libraries addresses (names are substituted by addresses - linker)
 
 If loaded in memory: To obtain the names, we need to look at the ILT (Import Lookup Table).
 
-# 5- How IAT Works
+# 6- How IAT Works
 
 For IaT detection in anti-cheat, since we are at runtime, we need to:
 
@@ -99,7 +139,7 @@ For IaT detection in anti-cheat, since we are at runtime, we need to:
 
 Since Windows overwrites the Iat with the addresses, you lose the names there. To obtain them, we need to look at the ILT (Import Lookup Table).
 
-# 6- Windows API - (Study before implementation)
+# 7- Windows API - (Study before implementation)
 
 ## GetModuleHandle
 
@@ -141,45 +181,3 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - What is the difference between its value before and after Windows loads the executable? Before loading (on disk), the field points to the name of the function, e.g. MessageBoxA (via an RVA). After the Windows loader runs, this pointer is overwritten by the actual memory address (VA) of the function inside the DLL (e.g. user32.dll).
 
 ---
-
-# 7- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
-
-<br>
-
-- Import Table (RVA) -> found at 0xbe05c - Using DiE:
-
-<img width="892" height="468" alt="Screenshot_6" src="https://github.com/user-attachments/assets/1abcca6f-b4d1-485e-bd65-c1e0cef9a5ed" />
-
-<br>
-
-- (RVA) Calculation: 0xbe05c - 0xa2000 + 0xa0800 = 0xBC85C
-
-- 0xBC85C = Import Directory (So-called IMAGE_IMPORT_DESCRIPTORs)
-
-<img width="828" height="319" alt="Screenshot_7" src="https://github.com/user-attachments/assets/1807cc78-6e17-4f0c-9c36-bac7aa90e422" />
-
-<br>
-<br>
-
-- IMAGE_IMPORT_DESCRIPTOR looks like:
-<img width="530" height="130" alt="Screenshot_8" src="https://github.com/user-attachments/assets/7b614cef-a3fc-4c48-b1a7-d7ef6fef2a26" />
-
-- DWORD = 4 Bytes
-
-- If we jump, after 12 bytes we find name: 
-
-<img width="828" height="319" alt="Screenshot_9" src="https://github.com/user-attachments/assets/66605b33-23c6-4796-9338-bca2e03576e8" />
-
-<br>
-
-- found -> 0xbe4c6 (should be name )
-  
-- (RVA) Calculation: 0xbe4c6 - 0xa2000 + 0xa0800 = 0xBCCC6
-
-- 0xBCCC6 -> If our calculations are correct, we should find a DLL name at this address
-
-<img width="693" height="184" alt="Screenshot_10" src="https://github.com/user-attachments/assets/c1a8bc84-8de4-4417-9d14-2df43d9dfc35" />
-
-
-
-
