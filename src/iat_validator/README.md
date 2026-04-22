@@ -134,9 +134,13 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 # 6- Manually finding IMAGE_IMPORT_DESCRIPTOR's
 
+<br>
+
 Import Table (RVA) -> found at 0xbe05c - Using DiE:
 
 <img width="892" height="468" alt="Screenshot_6" src="https://github.com/user-attachments/assets/1abcca6f-b4d1-485e-bd65-c1e0cef9a5ed" />
+
+<br>
 
 - (RVA) Calculation: 0xbe05c - 0xa2000 + 0xa0800 = 0xBC85C
 
@@ -151,12 +155,11 @@ Import Table (RVA) -> found at 0xbe05c - Using DiE:
 
 - DWORD = 4 Bytes
 
-- If we jump, after 12 bytes we find name:
-
-found -> 0xbe4c6 (should be name )
+- If we jump, after 12 bytes we find name: found -> 0xbe4c6 (should be name )
 
 <img width="828" height="319" alt="Screenshot_9" src="https://github.com/user-attachments/assets/66605b33-23c6-4796-9338-bca2e03576e8" />
 
+<br>
 
 - (RVA) Calculation: 0xbe4c6 - 0xa2000 + 0xa0800 = 0xBCCC6
 
