@@ -150,7 +150,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - What happens when you pass NULL as a parameter?  The handle to the calling program is returned
 - Which header do you need to include? #include <windows.h>
 
-[WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea)
+WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea)
 
 ---
 
