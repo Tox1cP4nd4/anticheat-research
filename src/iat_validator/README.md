@@ -160,7 +160,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - Why does it need a process handle as a parameter?  (hProcess) To determine which program the function should obtain information from.
 - Which header do you need to include? The include we will need when we start coding: #include <psapi.h>
 
-[WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo)
+[WinAPI-Documentation](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo](https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmoduleinformation)
 
 
 ---
