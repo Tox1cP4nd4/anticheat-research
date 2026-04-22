@@ -155,12 +155,14 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 - DWORD = 4 Bytes
 
-- If we jump, after 12 bytes we find name: found -> 0xbe4c6 (should be name )
+- If we jump, after 12 bytes we find name: 
 
 <img width="828" height="319" alt="Screenshot_9" src="https://github.com/user-attachments/assets/66605b33-23c6-4796-9338-bca2e03576e8" />
 
 <br>
 
+- found -> 0xbe4c6 (should be name )
+  
 - (RVA) Calculation: 0xbe4c6 - 0xa2000 + 0xa0800 = 0xBCCC6
 
 - 0xBCCC6 -> If our calculations are correct, we should find a DLL name at this address
