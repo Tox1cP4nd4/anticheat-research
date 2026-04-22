@@ -157,6 +157,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 <br>
 <br>
 
+- IMAGE_IMPORT_DESCRIPTOR looks like:
 <img width="530" height="130" alt="Screenshot_8" src="https://github.com/user-attachments/assets/7b614cef-a3fc-4c48-b1a7-d7ef6fef2a26" />
 
 - DWORD = 4 Bytes
