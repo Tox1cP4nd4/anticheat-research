@@ -141,6 +141,8 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 # 7- Windows API - (Study before implementation)
 
+"After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs". Following this, we can find the imported dll names and functions. 
+
 ## GetModuleHandle
 
 - What is a Module? On Windows a module is a executable program or DLL loaded into memory (e.g. exe, dll)
