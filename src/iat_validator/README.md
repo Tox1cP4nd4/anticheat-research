@@ -7,13 +7,13 @@ Studdy to understand better how IAT works and how to implement Anti-Cheat IAT De
 Offset 0x00   ┌──────────────────────────────────────────────────────┐
               │  IMAGE_DOS_HEADER  (64 bytes)                        │
               │  - e_magic: "MZ"                                     │
-              │  - e_lfanew  ←  Offset to PE Header                 │
+              │  - e_lfanew  ←  Offset to PE Header                  │
               ├──────────────────────────────────────────────────────┤
 Offset ~0x40  │  DOS Stub Program                                    │
               │  "This program cannot be run in DOS mode."           │
               ├──────────────────────────────────────────────────────┤
    e_lfanew   │  PE Header                                           │
-              │  ├─ Signature: "PE\0\0"                             │
+              │  ├─ Signature: "PE\0\0"                              │
               │  ├─ COFF File Header (20 bytes)                      │
               │  └─ Optional Header (224 or 240 bytes)               │
               │       │                                              │
@@ -37,11 +37,11 @@ Offset ~0x40  │  DOS Stub Program                                    │
               │  ...                                                 │
               ├──────────────────────────────────────────────────────┤
               │  Image Sections  (the actual content)                │
-              │  ├─ .text     → Machine code                          │
-              │  ├─ .rdata    → Import Table + IAT + constants        │
-              │  ├─ .data     → Global variables                      │
-              │  ├─ .rsrc     → Icons, dialogs, version info          │
-              │  ├─ .reloc    → Relocation information                │
+              │  ├─ .text     → Machine code                         │
+              │  ├─ .rdata    → Import Table + IAT + constants       │
+              │  ├─ .data     → Global variables                     │
+              │  ├─ .rsrc     → Icons, dialogs, version info         │
+              │  ├─ .reloc    → Relocation information               │
               │  └─ ...                                              │
               └──────────────────────────────────────────────────────┘
 ```
