@@ -77,13 +77,13 @@ Wee can see these values opening the same binary on DetectItEasy (DIE):
 The structure we found seems to be called IMAGE_IMPORT_BY_NAME. The first 2 bytes are Hint (ignore them).
 Then we can see the ASCII text (Function Name)
 
-# 3- File on HD X Memory
+# 4- File on HD X Memory
 
 If the file is on HD, IaT points tothe function names. But if it's loaded on memory, it points to the libraries addresses (names are substituted by addresses - linker)
 
 If loaded in memory: To obtain the names, we need to look at the ILT (Import Lookup Table).
 
-# 4- How IAT Works
+# 5- How IAT Works
 
 For IaT detection in anti-cheat, since we are at runtime, we need to:
 
@@ -95,9 +95,9 @@ For IaT detection in anti-cheat, since we are at runtime, we need to:
 
 Since Windows overwrites the Iat with the addresses, you lose the names there. To obtain them, we need to look at the ILT (Import Lookup Table).
 
-# 5- Windows API - (Study before implementation)
+# 6- Windows API - (Study before implementation)
 
-## 1. GetModuleHandle
+## GetModuleHandle
 
 - What is a Module? On Windows a module is a executable program or DLL loaded into memory (e.g. exe, dll)
 - What does it return?  A pointer to the module base
@@ -108,7 +108,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-## 2. GetModuleInformation
+## GetModuleInformation
 
 - What is MODULEINFO and what fields does it have?  A windows API function that "Retrieves information about the specified module". [FIELDS](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo): lpBaseOfDll, SizeOfImage, EntryPoint
 - Why does it need a process handle as a parameter?  (hProcess) To determine which program the function should obtain information from.
@@ -119,7 +119,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-## 3. IMAGE_IMPORT_DESCRIPTOR
+## IMAGE_IMPORT_DESCRIPTOR
 
 - How many fields does this struct have? 5 fields: OriginalFirstThunk, TimeDateStamp, ForwarderChain, Name, FirstThunk
 - Which field points to the DLL name?  Name. (e.g. user32.dll) -> this field does not change
@@ -131,14 +131,14 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 ---
 
-## 4. IMAGE_THUNK_DATA
+## IMAGE_THUNK_DATA
 
 - What does each entry in this struct represent?  
 - What is the difference between its value before and after Windows loads the executable? Before loading (on disk), the field points to the name of the function, e.g. MessageBoxA (via an RVA). After the Windows loader runs, this pointer is overwritten by the actual memory address (VA) of the function inside the DLL (e.g. user32.dll).
 
 ---
 
-# 6- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
+# 7- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
 
 <br>
 
