@@ -83,7 +83,7 @@ Then we can see the ASCII text (Function Name)
 
 # 4- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
 
-"After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs". Following this, we can find the imported dll names and functions. 
+"After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs". From here, we can locate the imported DLL names along with their respective functions, as well as the Import Address Table (IAT) and the Import Lookup Table (ILT).
 
 <br>
 
