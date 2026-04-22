@@ -56,6 +56,8 @@ Source:
 
 - I will be using EasyAntiCheat binary as example for this studdy. File Hash = 652761ed1fa44955ffde4c3daeb0654937f7cdef7a3a05ddf509c2e707f46e0d
 
+[Download Here](https://mega.nz/file/iopSTQRb#DbW3NH5TwKyamcgexjOqHiG-fLFd0mqZ7DaABeMwt5w)
+
 <br>
 
 <img width="1323" height="640" alt="Screenshot_1" src="https://github.com/user-attachments/assets/fa6c8285-7b21-499f-ac85-1649670a8ab4" />
