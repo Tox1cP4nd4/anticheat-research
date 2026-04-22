@@ -136,7 +136,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 <br>
 
-Import Table (RVA) -> found at 0xbe05c - Using DiE:
+- Import Table (RVA) -> found at 0xbe05c - Using DiE:
 
 <img width="892" height="468" alt="Screenshot_6" src="https://github.com/user-attachments/assets/1abcca6f-b4d1-485e-bd65-c1e0cef9a5ed" />
 
@@ -144,7 +144,7 @@ Import Table (RVA) -> found at 0xbe05c - Using DiE:
 
 - (RVA) Calculation: 0xbe05c - 0xa2000 + 0xa0800 = 0xBC85C
 
-0xBC85C = Import Directory (So-called IMAGE_IMPORT_DESCRIPTORs)
+- 0xBC85C = Import Directory (So-called IMAGE_IMPORT_DESCRIPTORs)
 
 <img width="828" height="319" alt="Screenshot_7" src="https://github.com/user-attachments/assets/1807cc78-6e17-4f0c-9c36-bac7aa90e422" />
 
