@@ -1,29 +1,11 @@
 #include <windows.h>
 #include <psapi.h>
 #include <iostream>
+# include <dbghelp.h>
 
 using namespace std;
 
 // Work in progress / learning PE navigation and IAT validation
-// in the future: Instead of calculating offsets manually, use Windows SDK ready-made structs.
-
-/*
-Goal
--------------
-
-1 - Get Module Base
-GetModuleInformation() -> get lpBaseOfDll (module base address) X
-
-PE header pointer = base address + 0x3C
-
-PE header pointer + 0x80 = ImportDirectory
-
-ImportDirectory: Loop this array. For each structure:
-- Get function name. Read function address from IAT
-- Read DLL name, get DLL address
-- If function address outside DLL address: IAT Hook detected!
-
-*/
 
 int main() {
 
@@ -40,17 +22,25 @@ int main() {
     GetModuleInformation(GetCurrentProcess(), hModule, &mInfo, sizeof(MODULEINFO));
 
     uintptr_t base = reinterpret_cast<uintptr_t>(mInfo.lpBaseOfDll);
-
-    uintptr_t peHeaderAddr = *reinterpret_cast<uintptr_t*>(base + 0x3C);
-
-    uintptr_t ImportDirectoryRVA = peHeaderAddr + 0x80;
-
-    uintptr_t ImportDirectoryVA = base + ImportDirectoryRVA;
-
     cout << "Base: 0x" << hex << base << endl;
-    cout << "PE Header: 0x" << hex << peHeaderAddr << endl;
-    cout << "Import Directory RVA: 0x" << hex << ImportDirectoryRVA << endl;
-    cout << "Import Directory VA: 0x" << hex << ImportDirectoryVA << endl;
+
+    PIMAGE_NT_HEADERS ntHeaders;
+    ntHeaders = ImageNtHeader(mInfo.lpBaseOfDll); // (https://learn.microsoft.com/en-us/windows/win32/api/dbghelp/nf-dbghelp-imagentheader)
+
+    IMAGE_OPTIONAL_HEADER optHeader = ntHeaders->OptionalHeader; // (https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_optional_header32)
+
+    IMAGE_DATA_DIRECTORY imgDataDirectory = optHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT]; // (https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_data_directory)
+    cout << "imgDataDirectory: 0x" << hex << imgDataDirectory.VirtualAddress << endl;
+
+    // 104/120	Import table address and size    /      192/208	Import address table address and size
+    uintptr_t importTableVA = imgDataDirectory.VirtualAddress;
+    uintptr_t importTable = imgDataDirectory.VirtualAddress + base;
+    cout << "importTable: 0x" << hex << importTable << endl;
+
+    DWORD nameRVA = *reinterpret_cast<DWORD*>(importTable + 0x0C);
+    uintptr_t nameAddr = base + nameRVA;
+
+    cout << "firstName: " << reinterpret_cast<char*>(nameAddr) << endl;
 
     /*
         ImportDirectory: Loop this array. For each structure:
