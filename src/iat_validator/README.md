@@ -183,3 +183,123 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 - What is the difference between its value before and after Windows loads the executable? Before loading (on disk), the field points to the name of the function, e.g. MessageBoxA (via an RVA). After the Windows loader runs, this pointer is overwritten by the actual memory address (VA) of the function inside the DLL (e.g. user32.dll).
 
 ---
+
+# 8- CODING
+
+## 1) Get Import Table Address
+```
+HMODULE hModule = GetModuleHandleA(NULL); // Module handle
+    if (hModule == NULL) { 
+        cout << "Failed to find process handle" << endl; 
+        return 0; 
+    }
+
+    MODULEINFO mInfo = {};
+
+    HANDLE currProcess = GetCurrentProcess(); // Get current process handle
+
+    GetModuleInformation(currProcess, hModule, &mInfo, sizeof(MODULEINFO)); // Get process info, and store it on MODULEINFO struct
+
+    uintptr_t base = reinterpret_cast<uintptr_t>(mInfo.lpBaseOfDll); // Cast from VOID* to perform calculations
+    cout << "Base: 0x" << hex << base << endl;
+
+    PIMAGE_NT_HEADERS ntHeaders;
+    ntHeaders = ImageNtHeader(mInfo.lpBaseOfDll); // Get ntHeaders struct
+    /*
+      typedef struct _IMAGE_NT_HEADERS {
+        DWORD                   Signature;
+        IMAGE_FILE_HEADER       FileHeader;
+        IMAGE_OPTIONAL_HEADER32 OptionalHeader;
+      } IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;
+    */
+
+    IMAGE_OPTIONAL_HEADER optHeader = ntHeaders->OptionalHeader; // OptionalHeader (contains data directory address)
+
+    IMAGE_DATA_DIRECTORY imgDataDirectory = optHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT]; 
+    cout << "imgDataDirectory: 0x" << hex << imgDataDirectory.VirtualAddress << endl;
+
+    uintptr_t importTableVA = imgDataDirectory.VirtualAddress;
+    uintptr_t importTable = imgDataDirectory.VirtualAddress + base;
+    cout << "importTable: 0x" << hex << importTable << endl << endl;
+```
+
+## 2) Get Import Table Address
+```
+- Loop through IMPORT_DESCRIPTORs
+- For each IMPORT_DESCRIPTOR:
+  - Get DLL Name and address
+  - For each IMAGE_THUNK_DATA:
+   - Get function Address
+   - If ourside DLL address, print: IAT Hook Detected!
+```
+
+IMPORT_DESCRIPTOR struct format is defined above in this file.
+IMAGE_THUNK_DATA is the array of pointers to the functions imported from the DLL.
+
+Loop PseudoCode:
+
+```
+Loop through descriptors: 
+        reads nameRVA at (importTable + 0x0C) 
+        if nameRVA == 0: break 
+
+        nameAddr = base + nameRVA 
+        gets moduleInfo from the DLL with the name 
+        calculates dllStart and dllEnd (dllStart + SizeOfImage) 
+
+        firstThunkRVA = reads (importTable + 0x10) 
+        thunkAddr = base + firstThunkRVA 
+
+        Loop through the thunks: 
+            address = reads *thunkAddr 
+            if address == 0: break 
+
+            if address < dllStart OR address > dllEnd: 
+            HOOK DETECTED 
+
+            thunkAddr += 8 (on x64) 
+
+        importTable += 0x14 (next descriptor)
+```
+
+Code implementation:
+
+```
+DWORD nameRVA = *reinterpret_cast<DWORD*>(importTable + 0x0C); // DLL NAME
+    while(nameRVA != 0){ // loop IMPORT_DESCRIPTORs
+        uintptr_t nameAddr = base + nameRVA;
+        cout << "Checking DLL: " << reinterpret_cast<char*>(nameAddr) << endl;
+        HMODULE firstThunkModule = GetModuleHandleA(reinterpret_cast<char*>(nameAddr));
+        MODULEINFO currModuleInfo = {};
+        GetModuleInformation(currProcess, firstThunkModule, &currModuleInfo, sizeof(MODULEINFO)); // GET DLL MEMORY RANGE
+        
+        DWORD firstThunkRVA = *reinterpret_cast<DWORD*>(importTable + 0x10); //  IMAGE_THUNK_DATAs
+        uintptr_t firstThunkAddr = base + firstThunkRVA;
+        uintptr_t address = *reinterpret_cast<uintptr_t*>(firstThunkAddr);
+        while( address != 0 ){ // End indicated by an IMAGE_THUNK_DATA element with a value of zero
+            uintptr_t size = reinterpret_cast<uintptr_t>(currModuleInfo.lpBaseOfDll) + currModuleInfo.SizeOfImage;
+            if( address > size || address < reinterpret_cast<uintptr_t>(currModuleInfo.lpBaseOfDll) ) { cout << "Warning: IAT Hook Detected!" << endl; }
+            firstThunkAddr += sizeof(uintptr_t);
+            address = *reinterpret_cast<uintptr_t*>(firstThunkAddr);
+        }
+
+        importTable += 0x14; // Move to the next struct 
+        nameRVA = *reinterpret_cast<DWORD*>(importTable + 0x0C); // NEXT DLL NAME
+    }
+   
+    system("pause");
+```
+
+Compile:  g++ iat.cpp -o iat.exe -static-libgcc -static-libstdc++ -ldbghelp
+Execute: ./iat.exe
+
+# 9- Limitations
+
+<img width="477" height="538" alt="image" src="https://github.com/user-attachments/assets/5168cffa-a5c9-4d72-baac-84587bbad6d1" />
+<br>
+
+As you can see we get false positives with "KERNEL32.dll". This occurs because of a Windows mechanism known as API Forwarding. Many Windows system APIs are not implemented within the DLL where they are exported. Instead, the DLL contains a "forwarder" entry that redirects the call to another module (typically kernelbase.dll or ntdll.dll). 
+
+## Technical Solution
+
+To resolve this, the anti-cheat must compare IAT entries against addresses resolved via GetProcAddress rather than checking if they fall within the specific module's memory bounds
