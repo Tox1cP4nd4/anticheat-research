@@ -186,7 +186,7 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 
 # 8- CODING
 
-## 1) Get Import Table Address
+## Get Import Table Address
 ```
 HMODULE hModule = GetModuleHandleA(NULL); // Module handle
     if (hModule == NULL) { 
@@ -223,7 +223,7 @@ HMODULE hModule = GetModuleHandleA(NULL); // Module handle
     cout << "importTable: 0x" << hex << importTable << endl << endl;
 ```
 
-## 2) Get Import Table Address
+  ## Comparison Logic
 ```
 - Loop through IMPORT_DESCRIPTORs
 - For each IMPORT_DESCRIPTOR:
