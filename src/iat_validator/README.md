@@ -233,6 +233,9 @@ HMODULE hModule = GetModuleHandleA(NULL); // Module handle
    - If ourside DLL address, print: IAT Hook Detected!
 ```
 
+<img width="380" height="202" alt="cc301808 pe2fig06(en-us,msdn 10)" src="https://github.com/user-attachments/assets/93985941-8c64-4b8d-8d11-02c1d83504e1" />
+
+
 IMPORT_DESCRIPTOR struct format is defined above in this file.
 IMAGE_THUNK_DATA is the array of pointers to the functions imported from the DLL.
 
