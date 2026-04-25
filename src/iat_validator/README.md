@@ -207,8 +207,6 @@ Warning: This technique has a minor issue with false positives! We'll address th
 
 - Finally, the practical part. After learning every little bit of the process, the code is easy to understand.
 
-- 
-
 ## Get Import Table Address
 ```
 HMODULE hModule = GetModuleHandleA(NULL); // Module handle
