@@ -6,3 +6,8 @@ There are different methods to debug a program. We're gonna cover some of them i
 - Dynamic Analysis Tools: Tools commonly used by cheaters to debug a program (e.g. CheatEngine, x64dbg, IDA Pro)
 - Hardware Breakpoints: Unlike software breakpoints, these utilize physical processor resources.
 - Kernel debuggers (WinDbg): Allow you to pause the entire operating system. They usually require two computers connected via cable or network.
+
+[What is Debug Detection?](https://digital.ai/debug-detection/)
+[Understanding Debugger Detection on Windows: Three Practical Techniques](https://medium.com/@andrenetwork.sec/understanding-debugger-detection-on-windows-three-practical-techniques-9f7fa9699118)
+[Debugger Detection Techniques: The Summary of a Summary](https://aams-eam.pages.dev/posts/debugger-detection-techniques_the-summary-of-a-summary/)
+[Anti Debug: TLS Callback](https://unprotect.it/technique/tls-callback/)
