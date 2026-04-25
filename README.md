@@ -17,8 +17,8 @@ a solid understanding of the attack surface. Now I'm flipping sides.
 
 ```
 anticheat-research/
-├── notes/    ← concepts I'm studying, written in my own words (I won't use AI to improve my english on this one, be prepared. LOL)
-└── src/      ← implementations as I learn each technique
+├── notes/    ← General anticheat concepts studdy
+└── src/      ← Implementations (C++) and studdy notes (README) as I learn each technique
 ```
 
 ---
