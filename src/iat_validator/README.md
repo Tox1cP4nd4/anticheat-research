@@ -317,3 +317,6 @@ I've updated the code to address this issue, and now it works as expected:
 <br>
 <img width="656" height="623" alt="image" src="https://github.com/user-attachments/assets/ffba22a4-5605-4688-a54b-6a9f908792e6" />
 
+## 11- IAT Hook Simulation
+
+The implementation features an iatHook() function designed to simulate a classic IAT injection attack. It leverages VirtualProtect to gain write access to the module's Import Address Table, overwrites the target function pointer (e.g., Sleep), and restores the original memory protection flags. This routine serves as a controlled test case to validate the effectiveness of the anti-cheat's detection engine.
