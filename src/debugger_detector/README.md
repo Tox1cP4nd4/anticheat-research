@@ -11,3 +11,4 @@ There are different methods to debug a program. We're gonna cover some of them i
 [Understanding Debugger Detection on Windows: Three Practical Techniques](https://medium.com/@andrenetwork.sec/understanding-debugger-detection-on-windows-three-practical-techniques-9f7fa9699118) <br>
 [Debugger Detection Techniques: The Summary of a Summary](https://aams-eam.pages.dev/posts/debugger-detection-techniques_the-summary-of-a-summary/) <br>
 [Anti Debug: TLS Callback](https://unprotect.it/technique/tls-callback/) <br>
+[UltimateAntiCheat DebuggerDetections](https://github.com/AlSch092/UltimateAntiCheat/blob/main/AntiDebug/DebuggerDetections.cpp)
