@@ -60,7 +60,7 @@ Source:
 # 2- Finding Import Address Table in PE executable file
 
 <br>
-
+- I think the first step is to become comfortable with the Windows executable binary format (PE). Let's identify some important parts.
 - I will be using EasyAntiCheat binary as example for this studdy. File Hash = 652761ed1fa44955ffde4c3daeb0654937f7cdef7a3a05ddf509c2e707f46e0d
 
 [Download Here](https://mega.nz/file/iopSTQRb#DbW3NH5TwKyamcgexjOqHiG-fLFd0mqZ7DaABeMwt5w)
@@ -71,11 +71,11 @@ Source:
 
 # 3 - RVA vs File Offset
 
-IAT Address (0xa2000) is RVA address. To find the IAT in the file:
+- IAT Address shown in the image above (0xa2000) is RVA address. To find the correct address of IAT in the file we will need to perform this calculation:
 
 Offset = RVA (0xa2000) - Section VA (0xa2000) + PointerToRawData (0xa0800) = 0xa0800
 
-Wee can see these values opening the same binary on DetectItEasy (DIE):
+- Wee can see these values opening the same binary on DetectItEasy (DIE) binary analysis tool:
 
 <img width="654" height="158" alt="Screenshot_4" src="https://github.com/user-attachments/assets/860ba445-e67d-49b8-b8aa-7271617f519e" />
 
@@ -85,20 +85,24 @@ Wee can see these values opening the same binary on DetectItEasy (DIE):
 
 <br>
 
-The structure we found seems to be called IMAGE_IMPORT_BY_NAME. The first 2 bytes are Hint (ignore them).
+The structure we found is called IMAGE_IMPORT_BY_NAME. The first 2 bytes are Hint (We'll use this information later when we develop the code. We'll ignore the hint).
 Then we can see the ASCII text (Function Name)
 
 # 4- Manually finding IMAGE_IMPORT_DESCRIPTOR's and Name
 
-"After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs". From here, we can locate the imported DLL names along with their respective functions, as well as the Import Address Table (IAT) and the Import Lookup Table (ILT).
+- Each IMAGE_IMPORT_DESCRIPTOR contains an imported DLL, its name, and the imported functions. We'll find it manually to better understand it before we start coding.
+
+- From one of our sources: "After the PE Signature there is an RVA to the Import Directory. The Import Directory is an array of so-called IMAGE_IMPORT_DESCRIPTORs. From here, we can locate the imported DLL names along with their respective functions, as well as the Import Address Table (IAT) and the Import Lookup Table (ILT)."
 
 <br>
 
-- Import Table (RVA) -> found at 0xbe05c - Using DiE:
+- Import Table (RVA) -> found at 0xbe05c - For simplicity, find the address using the DiE tool:
 
 <img width="892" height="468" alt="Screenshot_6" src="https://github.com/user-attachments/assets/1abcca6f-b4d1-485e-bd65-c1e0cef9a5ed" />
 
 <br>
+
+- Again, this is RVA (Relative Virtual Address), we need to calculate the VA.
 
 - (RVA) Calculation: 0xbe05c - 0xa2000 + 0xa0800 = 0xBC85C
 
@@ -112,9 +116,9 @@ Then we can see the ASCII text (Function Name)
 - IMAGE_IMPORT_DESCRIPTOR looks like:
 <img width="530" height="130" alt="Screenshot_8" src="https://github.com/user-attachments/assets/7b614cef-a3fc-4c48-b1a7-d7ef6fef2a26" />
 
-- DWORD = 4 Bytes
+- Remember: This is the structure that contains the DLL and function names.
 
-- If we jump, after 12 bytes we find name: 
+- DWORD = 4 Bytes: If we jump 12 bytes, we find 'name': 
 
 <img width="828" height="319" alt="Screenshot_9" src="https://github.com/user-attachments/assets/66605b33-23c6-4796-9338-bca2e03576e8" />
 
@@ -132,11 +136,15 @@ Then we can see the ASCII text (Function Name)
 
 # 5- File on HD X Memory
 
-If the file is on HD, IaT points to the function names. But if it's loaded on memory, it points to the libraries addresses (names are substituted by addresses - linker)
+Before we move on, let's remember one important detail:
 
-If loaded in memory: To obtain the names, we need to look at the ILT (Import Lookup Table).
+- If the file is on disk, IaT (IMAGE_IMPORT_DESCRIPTOR->FirstThunk) points to the function names. But if it's loaded on memory, it points to the libraries addresses (names are substituted by addresses - linker)
+
+If loaded in memory: To obtain the names, we need to look at the ILT (Import Lookup Table: IMAGE_IMPORT_DESCRIPTOR->OriginalFirstThunk)
 
 # 6- How IAT Works
+
+- After understanding the basics of PE structure and IAT, let's research how IAT Detection works:
 
 For IaT detection in anti-cheat, since we are at runtime, we need to:
 
@@ -148,7 +156,11 @@ For IaT detection in anti-cheat, since we are at runtime, we need to:
 
 Since Windows overwrites the Iat with the addresses, you lose the names there. To obtain them, we need to look at the ILT (Import Lookup Table).
 
+Warning: This technique has a minor issue with false positives! We'll address that later.
+
 # 7- Windows API - (Study before implementation)
+
+- So far we know the structure of a PE, what VA and RVA are, and the structure of IAT and ITL. Before moving on to the practical part, let's study some essential functions of the Windows API (well documented on the Microsoft website):
 
 ## GetModuleHandle
 
@@ -192,6 +204,10 @@ Since Windows overwrites the Iat with the addresses, you lose the names there. T
 ---
 
 # 8- CODING
+
+- Finally, the practical part. After learning every little bit of the process, the code is easy to understand.
+
+- 
 
 ## Get Import Table Address
 ```
@@ -300,7 +316,7 @@ DWORD nameRVA = *reinterpret_cast<DWORD*>(importTable + 0x0C); // DLL NAME
     system("pause");
 ```
 
-Compile:  g++ iat.cpp -o iat.exe -static-libgcc -static-libstdc++ -ldbghelp
+Compile:  g++ iat.cpp -o iat.exe -static-libgcc -static-libstdc++ -ldbghelp <br>
 Execute: ./iat.exe
 
 # 9- Limitations
