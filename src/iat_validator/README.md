@@ -341,3 +341,21 @@ I've updated the code to address this issue, and now it works as expected:
 ## 11- IAT Hook Simulation
 
 The implementation features an iatHook() function designed to simulate a classic IAT injection attack. It leverages VirtualProtect to gain write access to the module's Import Address Table, overwrites the target function pointer (e.g., Sleep), and restores the original memory protection flags. This routine serves as a controlled test case to validate the effectiveness of the anti-cheat's detection engine.
+
+## 12- Conclusion
+
+This IAT Validator provides a lightweight yet effective user-mode anti-cheat technique that detects Import Address Table hooks by comparing each imported function address against its legitimate location resolved via GetProcAddress. By thoroughly understanding the PE format, IMAGE_IMPORT_DESCRIPTORs, and thunk tables while properly handling API forwarding, the implementation reliably identifies IAT tampering with minimal false positives and low overhead. The included hook simulation further validates its effectiveness, making this a practical and educational addition to any anti-cheat system studdy.
+
+## 13- Sources
+
+- [UltimateAntiCheat](https://github.com/AlSch092/UltimateAntiCheat) — open source AC reference.
+- [Windows PE Format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
+- [PE File Format - cnBlogs](https://www.cnblogs.com/walfud/articles/2608019.html)
+- [PE File Format Offsets](https://www.sunshine2k.de/reversing/tuts/tut_pe.htm)
+- [EasyAntiCheat Binary](https://mega.nz/file/iopSTQRb#DbW3NH5TwKyamcgexjOqHiG-fLFd0mqZ7DaABeMwt5w) - File used in our study to learn the PE format.
+- [GetModuleHandleA - Windows API](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea)
+- [MODULE INFO Structure - Windows API](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo)
+- [GetModuleInformation - Windows API](https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmoduleinformation)
+- [Understanding RVAs and Import Tables - by Sunshine](https://www.sunshine2k.de/reversing/tuts/tut_rvait.htm)
+- [IMAGE_IMPORT_BY_NAMEs Structure - StackOverflow](https://stackoverflow.com/questions/41581363/how-we-can-get-hint-in-image-import-by-name-struct-in-pe-file)
+
