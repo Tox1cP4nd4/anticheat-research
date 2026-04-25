@@ -1,5 +1,12 @@
-# First Steps
-Studdy to understand better how IAT works and how to implement Anti-Cheat IAT Detection.
+# IAT Validator
+
+A user-mode anti-cheat detection technique that identifies IAT (Import 
+Address Table) hooks by validating each imported function's address 
+against its expected location.
+
+This README documents the full process — from learning the PE format, 
+to manually analyzing a binary with a hex editor, to implementing 
+working detection code in C++.
 
 # 1- Understand PE File Structure
 
