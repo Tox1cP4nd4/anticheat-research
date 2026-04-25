@@ -348,11 +348,11 @@ This IAT Validator provides a lightweight yet effective user-mode anti-cheat tec
 
 ## 13- Sources
 
-- [UltimateAntiCheat](https://github.com/AlSch092/UltimateAntiCheat) — open source AC reference.
+- [UltimateAntiCheat](https://github.com/AlSch092/UltimateAntiCheat) (open source AC reference)
 - [Windows PE Format](https://learn.microsoft.com/en-us/windows/win32/debug/pe-format)
 - [PE File Format - cnBlogs](https://www.cnblogs.com/walfud/articles/2608019.html)
 - [PE File Format Offsets](https://www.sunshine2k.de/reversing/tuts/tut_pe.htm)
-- [EasyAntiCheat Binary](https://mega.nz/file/iopSTQRb#DbW3NH5TwKyamcgexjOqHiG-fLFd0mqZ7DaABeMwt5w) - File used in our study to learn the PE format.
+- [EasyAntiCheat Binary](https://mega.nz/file/iopSTQRb#DbW3NH5TwKyamcgexjOqHiG-fLFd0mqZ7DaABeMwt5w) (File used in our study to learn the PE format)
 - [GetModuleHandleA - Windows API](https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea)
 - [MODULE INFO Structure - Windows API](https://learn.microsoft.com/en-us/windows/win32/api/psapi/ns-psapi-moduleinfo)
 - [GetModuleInformation - Windows API](https://learn.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmoduleinformation)
