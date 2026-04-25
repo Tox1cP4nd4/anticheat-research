@@ -303,6 +303,17 @@ Execute: ./iat.exe
 
 As you can see we get false positives with "KERNEL32.dll". This occurs because of a Windows mechanism known as API Forwarding. Many Windows system APIs are not implemented within the DLL where they are exported. Instead, the DLL contains a "forwarder" entry that redirects the call to another module (typically kernelbase.dll or ntdll.dll). 
 
-## Technical Solution
+## 10- Technical Solution
 
-To resolve this, the anti-cheat must compare IAT entries against addresses resolved via GetProcAddress rather than checking if they fall within the specific module's memory bounds
+To resolve this, the anti-cheat must compare IAT entries against addresses resolved via GetProcAddress rather than checking if they fall within the specific module's memory bounds.
+
+I've updated the code to address this issue, and now it works as expected:
+
+<img width="1088" height="252" alt="image" src="https://github.com/user-attachments/assets/bb6f4f73-5cfa-4999-9e31-118984d24894" />
+<br>
+<img width="722" height="568" alt="image" src="https://github.com/user-attachments/assets/cd70c9c6-17fe-4d25-ba72-8e81ed630097" />
+<br>
+<img width="712" height="224" alt="image" src="https://github.com/user-attachments/assets/c5dfb56a-0d82-4c0e-83cb-f30d52b0d67a" />
+<br>
+<img width="656" height="623" alt="image" src="https://github.com/user-attachments/assets/ffba22a4-5605-4688-a54b-6a9f908792e6" />
+
