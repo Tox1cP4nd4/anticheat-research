@@ -16,3 +16,7 @@ There are different methods to debug a program. We're gonna cover some of them i
 # TLS Callback
 
 - TLS Callbacks are functions executed by the OS before the program’s entry point (Main). This is crucial for debugger detection because many entry-level reverse engineers expect execution to start at Main, and most debuggers are configured to break there by default. By embedding anti-debugging logic within a TLS Callback, a program can detect a debugger and terminate the process before the analyst even sees the first line of the Main function.
+
+[TLS Callback](https://unprotect.it/technique/tls-callback/)
+[TLS_Examples](https://github.com/kevinalmansa/TLS_Examples)
+[TLS Callbacks to bypass debuggers](https://medium.com/@andreabocchetti88/tls-callbacks-to-bypass-debuggers-60409195ed76)
